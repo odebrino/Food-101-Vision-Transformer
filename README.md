@@ -26,3 +26,9 @@ python -m pip install timm==1.0.31 Pillow==13.0.0
 ```
 
 The builders load the [DeiT-Tiny weights](https://huggingface.co/timm/deit_tiny_patch16_224.fb_in1k/tree/80e968688553f219e4a86f940ed945a23709c16f) and [ResNet-18 IMAGENET1K_V1 weights](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.resnet18.html). For offline use, place the linked DeiT revision's `model.safetensors` at `local-data/pretrained/deit_tiny.safetensors` and cache the Torchvision weights on the machine.
+
+## Check the models before training
+
+Run `python verify_models.py` from the repository root. Both models receive the same seeded batch of 16 training images. The check performs one AdamW step on each new head, compares all backbone parameters and buffers, and verifies scores and labels after saving and reloading on the training batch and 16 validation images. The pilot weights are temporary.
+
+On an RTX 4060 Laptop GPU, the pilot measured 317 images/s for DeiT-Tiny and 319 images/s for ResNet-18. Each measurement includes reading and transforming eight batches of 16 local training images, inference and copying features back to host memory, after two warm-up batches. At these rates, extracting features for 1,000 training and 250 validation images would take about four seconds per model. Model loading, writing features to disk and fitting the classifier are separate costs.
