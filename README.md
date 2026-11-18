@@ -36,3 +36,7 @@ On an RTX 4060 Laptop GPU, the pilot measured 317 images/s for DeiT-Tiny and 319
 ## Cache features before training
 
 Run `python cache_features.py` to extract training and validation features with the frozen backbones. The script writes one file per model to `local-data/features/`. Load a file with `torch.load(path, map_location="cpu", weights_only=True)`. Its `train` and `validation` entries contain CPU feature tensors, integer labels and image IDs in manifest order. The stored manifest SHA-256 identifies the split. Regenerate the cache if the image data, split, backbone weights or preprocessing changes.
+
+## Score predictions
+
+Use the same `classification_scores(true_labels, predicted_labels)` function from `metrics.py` for both models. Pass the ground-truth IDs and the index of the highest-scoring class for each image in matching order. The function returns accuracy and macro F1 as fractions. Macro F1 averages over all ten classes and assigns zero to a class with no true or predicted examples. Run the synthetic checks with `python -m unittest test_metrics`.
