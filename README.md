@@ -32,3 +32,7 @@ The builders load the [DeiT-Tiny weights](https://huggingface.co/timm/deit_tiny_
 Run `python verify_models.py` from the repository root. Both models receive the same seeded batch of 16 training images. The check performs one AdamW step on each new head, compares all backbone parameters and buffers, and verifies scores and labels after saving and reloading on the training batch and 16 validation images. The pilot weights are temporary.
 
 On an RTX 4060 Laptop GPU, the pilot measured 317 images/s for DeiT-Tiny and 319 images/s for ResNet-18. Each measurement includes reading and transforming eight batches of 16 local training images, inference and copying features back to host memory, after two warm-up batches. At these rates, extracting features for 1,000 training and 250 validation images would take about four seconds per model. Model loading, writing features to disk and fitting the classifier are separate costs.
+
+## Cache features before training
+
+Run `python cache_features.py` to extract training and validation features with the frozen backbones. The script writes one file per model to `local-data/features/`. Load a file with `torch.load(path, map_location="cpu", weights_only=True)`. Its `train` and `validation` entries contain CPU feature tensors, integer labels and image IDs in manifest order. The stored manifest SHA-256 identifies the split. Regenerate the cache if the image data, split, backbone weights or preprocessing changes.

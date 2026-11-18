@@ -8,23 +8,13 @@ from pathlib import Path
 from time import perf_counter
 
 import torch
-from PIL import Image
 from torch.nn import functional as F
 
+from image_batches import load_batch
 from models import DEIT, RESNET, build_classifier, image_transform
 
 BATCH_SIZE = 16
 TIMED_BATCHES = 8
-IMAGE_ROOT = Path("local-data/food-101/images")
-
-
-def load_batch(rows, transform, device):
-    images = []
-    for row in rows:
-        with Image.open(IMAGE_ROOT / (row["image_id"] + ".jpg")) as image:
-            images.append(transform(image.convert("RGB")))
-    labels = torch.tensor([int(row["label"]) for row in rows], device=device)
-    return torch.stack(images).to(device), labels
 
 
 def check_update(model, images, labels):
