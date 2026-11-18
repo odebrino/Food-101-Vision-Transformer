@@ -1,0 +1,52 @@
+[
+  {
+    "label": 0,
+    "class_name": "apple_pie",
+    "food101_label": 0
+  },
+  {
+    "label": 1,
+    "class_name": "baby_back_ribs",
+    "food101_label": 1
+  },
+  {
+    "label": 2,
+    "class_name": "baklava",
+    "food101_label": 2
+  },
+  {
+    "label": 3,
+    "class_name": "beef_carpaccio",
+    "food101_label": 3
+  },
+  {
+    "label": 4,
+    "class_name": "beef_tartare",
+    "food101_label": 4
+  },
+  {
+    "label": 5,
+    "class_name": "beet_salad",
+    "food101_label": 5
+  },
+  {
+    "label": 6,
+    "class_name": "beignets",
+    "food101_label": 6
+  },
+  {
+    "label": 7,
+    "class_name": "bibimbap",
+    "food101_label": 7
+  },
+  {
+    "label": 8,
+    "class_name": "bread_pudding",
+    "food101_label": 8
+  },
+  {
+    "label": 9,
+    "class_name": "breakfast_burrito",
+    "food101_label": 9
+  }
+]
